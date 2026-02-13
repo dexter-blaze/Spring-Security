@@ -1,5 +1,7 @@
 package com.cn.hotel.config;
 
+import com.cn.hotel.jwt.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,10 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableAutoConfiguration
@@ -22,21 +26,21 @@ public class HotelSecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
+    @Autowired
+    JwtAuthenticationFilter filter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/user/register").permitAll() //antMatchers() removed in spring security version 6.0, this is replacement
+                .requestMatchers("/user/register","/auth/login").permitAll() //antMatchers() removed in spring security version 6.0, this is replacement
                 .anyRequest()
                 .authenticated()
                 .and()
-                .rememberMe().userDetailsService(userDetailsService) //5
-                .and()
-                .formLogin() //1
-                .loginPage("/login").permitAll() //4
-                .and()
-                .logout().deleteCookies("remember-me"); //6
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //used in realtime applications, you can use .httpBasic() authentication mechanism
+
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return  http.build();
     }
 
