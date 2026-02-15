@@ -1,0 +1,8 @@
+If @Data used on both the sides of bidirectional relation, the situation of infinite recursion arises do to some toString issue
+Fix : use @Getters @Setters on one of the side
+
+@JsonManagedReferece and @JsonBackReference used only in pair
+@JsonBackReference when used and if we send the data in it while sending the data in parent, we can insert the data
+			but @JsonIgnore neither takes the data nor gives it while sending through json
+HttpBasic -> basic authentication, which just sends your id password in base64URL encoding with every request
+FormLogin -> create cookie i.e. JSESSIONID which is sent with each request in request header

@@ -1,0 +1,1 @@
+The version of jjwt-api, jjwt-impl and jjwt-jackson should be same from group id io.jsonwebtoken
