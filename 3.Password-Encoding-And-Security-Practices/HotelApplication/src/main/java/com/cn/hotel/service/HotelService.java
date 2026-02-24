@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cn.hotel.communicator.RatingServiceCommunicator;
 import com.cn.hotel.dal.HotelRepository;
 import com.cn.hotel.dto.HotelRequest;
+import com.cn.hotel.dto.RatingResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cn.hotel.model.Hotel;
@@ -20,6 +22,9 @@ public class HotelService {
         this.hotelRepository = hotelRepository;
     }
 
+    @Autowired
+    RatingServiceCommunicator communicator;
+
 	
 	public void createHotel(HotelRequest hotelRequest) {
 		
@@ -32,9 +37,13 @@ public class HotelService {
 	}
 
 
-	public Hotel getHotelById(Long id) {
+	public Hotel getHotelById(String  authorizationHeader, Long id) {
 
-		return hotelRepository.findById(id).get();
+        String jwtToken = authorizationHeader.split(" ")[1];
+		Hotel hotel =  hotelRepository.findById(id).get();
+        RatingResponse ratingResponse = communicator.getRating(id.toString(), jwtToken);
+        hotel.setRating(ratingResponse.getRating());
+        return hotel;
 	}
 
 

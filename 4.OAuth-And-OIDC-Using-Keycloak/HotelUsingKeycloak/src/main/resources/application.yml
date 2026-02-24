@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/hotelDB?createDatabaseIfNotExist=true
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+  security:
+    oauth2:
+      client: #till here root property prefix for all OAuth2 client-related settings in Spring Security.
+        registration: #indentity providers you application "registers" with
+          keycloak: #this is the registrationID {baseUrl}/login/oauth2/code/{registrationId}
+            client-id: hotelApplicationUsingKeycloak
+            client-secret: 4V41lX5QWai8bXrGpSSMVsULajnnmCwI
+            scope: openid+profile+email #what we want to get from keycloak -> openid * ID Token,
+            authorization-grant-type: authorization_code
+        provider:
+          keycloak:
+            issuer-uri: https://lemur-0.cloud-iam.com/auth/realms/abhee
+            #base url of your keycloak realm
+            #realm -> realm settings -> OpenID Endpoint Configuration -> issuer
+server:
+  port: 8082
+
+
+

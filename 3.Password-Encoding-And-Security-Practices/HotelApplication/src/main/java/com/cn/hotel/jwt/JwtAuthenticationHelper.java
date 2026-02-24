@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Component
 public class JwtAuthenticationHelper {
-    private String secret = "this-is-the-secret-key-which-is-being-used-to-formulate-the-jwt-token-signature"; //minimum 256 bit long
+    private final String secret = "this-is-the-secret-key-which-is-being-used-to-formulate-the-jwt-token-signature"; //minimum 256 bit long
     private static final long JWT_TOKEN_VALIDITY = 60*60; //1hr
     public String getUsernameFromToken(String token) {
         Claims claims =  getClaimsFromToken(token);

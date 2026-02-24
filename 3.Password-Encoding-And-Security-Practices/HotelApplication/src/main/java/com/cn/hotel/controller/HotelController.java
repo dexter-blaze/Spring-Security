@@ -6,14 +6,7 @@ import java.util.List;
 import com.cn.hotel.dto.HotelRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cn.hotel.model.Hotel;
 import com.cn.hotel.service.HotelService;
@@ -32,13 +25,13 @@ public class HotelController {
 	public void createHotel(@RequestBody HotelRequest hotelRequest)
 	{
 		hotelService.createHotel(hotelRequest);
-	} 
-	
+	}
+
 	@GetMapping("/id/{id}")
     @PreAuthorize("hasRole('NORMAL')")
-	public Hotel getHotelById(@PathVariable Long id)
+	public Hotel getHotelById(@RequestHeader(name = "Authorization") String authorizationHeader, @PathVariable Long id)
 	{
-		return hotelService.getHotelById(id);
+		return hotelService.getHotelById(authorizationHeader, id);
 	}
 	
 	@GetMapping("/getAll")

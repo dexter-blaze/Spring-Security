@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             username = jwtHelper.getUsernameFromToken(token);
             //extract user details from username
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username); /** instead it should be taking the user details by parsing the JwtPayload */
                 //checking if the token is expired or not for this user
                 if (!jwtHelper.isTokenExpired(token)) {
                     //we bypassed the authentication manager and provider step

@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/tax_application?createDatabaseIfNotExist=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: TaxEase
+            client-secret: ZAOMClWD9J8bLnbyfdp5AmO0tbGytU0p
+            scope: openid+profile+email
+            authorization-grant-type: authorization_code
+        provider:
+          keycloak:
+            issuer-uri: https://lemur-0.cloud-iam.com/auth/realms/abhee
+server:
+  port: 8082
+
+
+

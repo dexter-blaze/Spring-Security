@@ -1,0 +1,15 @@
+package com.cn.homeControlSystem.repositories;
+
+import com.cn.homeControlSystem.model.SmartDevice;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+//extend JpaRepository with relevant generic types.
+//add annotation for this Repository interface.
+@Repository
+public interface SmartDevicesRepository extends JpaRepository<SmartDevice, Integer> {
+
+    SmartDevice findByName(String name);
+
+}

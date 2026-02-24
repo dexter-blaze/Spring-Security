@@ -1,1 +1,9 @@
 The version of jjwt-api, jjwt-impl and jjwt-jackson should be same from group id io.jsonwebtoken
+Tip : use a BOM file , search for jackson-bom etc.
+
+A Bill of Materials (BOM) is a "Master Version List" that ensures a group of related libraries work together perfectly.
+
+The Usecase:
+When a tool (like JJWT, AWS, or Spring) is split into many small pieces, using different versions for those pieces causes crashes. Instead of manually looking up and typing the version for every single piece, you import the BOM once
+
+placed in <DependencyManager> not <dependencies>
